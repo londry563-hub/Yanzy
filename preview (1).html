@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YANZY GAME TURBO</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080b15;color:white;
+ font-family:Arial,sans-serif;padding:20px
+}
+h1{color:#35e7ff;text-align:center}
+.card{
+ background:#151e30;padding:18px;
+ border-radius:16px;margin:12px 0;
+ border:1px solid #263b59
+}
+button{
+ background:#35dfff;color:#06101b;
+ border:0;padding:12px;border-radius:10px;
+ font-weight:bold
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#aim{
+ position:fixed;top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ color:#35e7ff;font-size:38px;
+ display:none;pointer-events:none
+}
+small{color:#9badc5}
+</style>
+</head>
+<body>
+
+<h1>YANZY TURBO</h1>
+<p style="text-align:center">ULTIMATE GAMING PANEL</p>
+
+<div class="card">
+<h2>🎮 GAME LAUNCHER</h2>
+<p>Pilih game dari layar utama HP kamu.</p>
+<button onclick="alert('Silakan buka game dari layar utama HP')">
+BUKA GAME
+</button>
+</div>
+
+<div class="grid">
+<div class="card">
+<h3>🎯 CROSSHAIR</h3>
+<button onclick="aim()">AKTIFKAN</button>
+</div>
+
+<div class="card">
+<h3>⚡ GAME MODE</h3>
+<button onclick="this.innerText=this.innerText==='AKTIF'?'AKTIFKAN':'AKTIF'">
+AKTIFKAN
+</button>
+</div>
+
+<div class="card">
+<h3>🔴 SCREEN RECORD</h3>
+<button onclick="record()">REKAM</button>
+</div>
+
+<div class="card">
+<h3>🔕 DND MODE</h3>
+<button onclick="alert('Buka pengaturan Jangan Ganggu Android')">
+PENGATURAN
+</button>
+</div>
+</div>
+
+<div class="card">
+<h3>🌈 CROSSHAIR COLOR</h3>
+<button onclick="color('#35e7ff')">CYAN</button>
+<button onclick="color('#ff3333')">RED</button>
+<button onclick="color('#39ff70')">GREEN</button>
+</div>
+
+<div id="aim">＋</div>
+
+<p style="text-align:center">
+<small>DEVELOPER: YANZY | BETA VERSION</small>
+</p>
+
+<script>
+function aim(){
+let a=document.getElementById('aim');
+a.style.display=a.style.display==='block'?'none':'block';
+}
+function color(c){
+document.getElementById('aim').style.color=c;
+}
+async function record(){
+try{
+let s=await navigator.mediaDevices.getDisplayMedia({video:true});
+let r=new MediaRecorder(s), chunks=[];
+r.ondataavailable=e=>chunks.push(e.data);
+r.onstop=()=>{
+let a=document.createElement('a');
+a.href=URL.createObjectURL(new Blob(chunks,{type:'video/webm'}));
+a.download='yanzy-record.webm';
+a.click();
+};
+r.start();
+alert('Perekaman dimulai. Muat ulang atau tutup sesi untuk mengakhiri.');
+}catch(e){alert('Perekaman tidak tersedia atau izin ditolak');}
+}
+</script>
+</body>
+</html>
